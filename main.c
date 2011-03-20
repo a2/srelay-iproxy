@@ -393,7 +393,11 @@ int inetd_service(int cs)
   return(0);
 }
 
+#if __IPHONE_2_0
+int srelay(int ac, char **av)
+#else
 int main(int ac, char **av)
+#endif
 {
   int     ch, i=0;
   pid_t   pid;

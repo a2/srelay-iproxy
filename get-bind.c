@@ -39,7 +39,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sys/ioctl.h>
 #include <sys/sockio.h>
 #include <net/if.h>
+#if defined(__IPHONE_2_0)
+#include "route.h"
+#else
 #include <net/route.h>
+#endif
 #ifdef	HAVE_SOCKADDR_DL_STRUCT
 # include <net/if_dl.h>
 #endif
@@ -67,6 +71,10 @@ static int get_ifconf(int, struct addrinfo *);
 #endif /* defined(LINUX) */
 
 #if defined(FREEBSD) || defined(SOLARIS) || defined(MACOSX) 
+
+#ifndef RTA_NUMBITS
+#define RTA_NUMBITS 8
+#endif
 
 #ifndef RTAX_DST
 #define RTAX_DST         0
