@@ -269,12 +269,12 @@ int serv_loop()
     getsockname(cs, &si.myc.addr.sa, (socklen_t *)&len);
     si.myc.len = len;
 
-    error = getnameinfo(&si.prc.addr.sa, si.prc.len,
+    getnameinfo(&si.prc.addr.sa, si.prc.len,
 			client.addr, sizeof(client.addr),
 			NULL, 0,
 			NI_NUMERICHOST);
     if (resolv_client) {
-      error = getnameinfo(&si.prc.addr.sa, si.prc.len,
+      getnameinfo(&si.prc.addr.sa, si.prc.len,
 			  client.name, sizeof(client.name),
 			  NULL, 0, 0);
       msg_out(norm, "%s[%s] connected", client.name, client.addr);
@@ -362,12 +362,12 @@ int inetd_service(int cs)
   getpeername(cs, &si.prc.addr.sa, (socklen_t *)&len);
   si.prc.len = len;
 
-  error = getnameinfo(&si.prc.addr.sa, si.prc.len,
+  getnameinfo(&si.prc.addr.sa, si.prc.len,
 		      client.addr, sizeof(client.addr),
 		      NULL, 0,
 		      NI_NUMERICHOST);
   if (resolv_client) {
-    error = getnameinfo(&si.prc.addr.sa, si.prc.len,
+    getnameinfo(&si.prc.addr.sa, si.prc.len,
 			client.name, sizeof(client.name),
 			NULL, 0, 0);
     msg_out(norm, "%s[%s] connected", client.name, client.addr);

@@ -186,7 +186,6 @@ int decode_socks_udp(UDP_ATTR *udp, u_char *buf)
 
 #define _addr_  udp->si.prs.addr
 
-  len = 0;
   udp->sv.len = 0;
   if (buf[2] != 0x00) {
     /* we do not support fragment */
@@ -488,7 +487,6 @@ int log_transfer(SOCK_INFO *si, LOGINFO *li)
   char    myc_port[NI_MAXSERV], mys_port[NI_MAXSERV];
   char    prc_port[NI_MAXSERV], prs_port[NI_MAXSERV];
   struct timeval elp;
-  int     error = 0;
 
   memcpy(&elp, &li->end, sizeof(struct timeval));
   if (elp.tv_usec < li->start.tv_usec) {
@@ -500,19 +498,19 @@ int log_transfer(SOCK_INFO *si, LOGINFO *li)
   *myc_ip = *mys_ip = *prc_ip = *prs_ip = '\0';
   *myc_port = *mys_port = *prc_port = *prs_port = '\0';
 
-  error = getnameinfo(&si->myc.addr.sa, si->myc.len,
+  getnameinfo(&si->myc.addr.sa, si->myc.len,
 		      myc_ip, sizeof(myc_ip),
 		      myc_port, sizeof(myc_port),
 		      NI_NUMERICHOST|NI_NUMERICSERV);
-  error = getnameinfo(&si->mys.addr.sa, si->mys.len,
+  getnameinfo(&si->mys.addr.sa, si->mys.len,
 		      mys_ip, sizeof(mys_ip),
 		      mys_port, sizeof(mys_port),
 		      NI_NUMERICHOST|NI_NUMERICSERV);
-  error = getnameinfo(&si->prc.addr.sa, si->prc.len,
+  getnameinfo(&si->prc.addr.sa, si->prc.len,
 		      prc_ip, sizeof(prc_ip),
 		      prc_port, sizeof(prc_port),
 		      NI_NUMERICHOST|NI_NUMERICSERV);
-  error = getnameinfo(&si->prs.addr.sa, si->prs.len,
+  getnameinfo(&si->prs.addr.sa, si->prs.len,
 		      prs_ip, sizeof(prs_ip),
 		      prs_port, sizeof(prs_port),
 		      NI_NUMERICHOST|NI_NUMERICSERV);

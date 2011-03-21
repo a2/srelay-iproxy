@@ -159,7 +159,6 @@ int get_bind_addr(bin_addr *dest, struct addrinfo *ba)
   struct if_list        ifl[MAXNUM_IF];
 
   pid_t			pid;
-  ssize_t		n;
   struct rt_msghdr	*rtm;
   struct sockaddr	*sa, *rti_info[RTAX_MAX];
   struct sockaddr_in	*sin;
@@ -212,7 +211,7 @@ int get_bind_addr(bin_addr *dest, struct addrinfo *ba)
 
   close(sockfd);
 
-  i = ent = 0;
+  i = 0;
   for (ptr = buf; ptr < buf + ifc.ifc_len; ) {
     ifr = (struct ifreq *) ptr;
     len = sizeof(struct sockaddr);
@@ -280,7 +279,7 @@ int get_bind_addr(bin_addr *dest, struct addrinfo *ba)
   write(sockfd, rtm, rtm->rtm_msglen);
 
   do {
-    n = read(sockfd, rtm, sizeof buf);
+    read(sockfd, rtm, sizeof buf);
   } while (rtm->rtm_type != RTM_GET || rtm->rtm_seq != SEQ ||
 	   rtm->rtm_pid != pid);
 
