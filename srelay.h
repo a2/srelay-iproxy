@@ -450,7 +450,8 @@ extern int proto_socks __P((SOCKS_STATE *));
 int get_bind_addr __P((bin_addr *, struct addrinfo *));
 
 /* util.c */
-extern void msg_out __P((int, const char *, ...));
+extern void (*msg_out_callback)__P((int, const char *, ...));
+#define msg_out(level, message...) do { if (msg_out_callback) { msg_out_callback(level, message); } } while (0)
 extern int addr_comp __P((bin_addr *, bin_addr *, int));
 extern void set_blocking __P((int));
 extern int settimer __P((int));

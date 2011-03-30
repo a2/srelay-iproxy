@@ -37,9 +37,12 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sys/wait.h>
 #include "srelay.h"
 
-int forcesyslog = 0;
+void msg_out_default(int severity, const char *fmt, ...);
 
-void msg_out(int severity, const char *fmt, ...)
+int forcesyslog = 0;
+void (*msg_out_callback)__P((int, const char *, ...)) = msg_out_default;
+
+void msg_out_default(int severity, const char *fmt, ...)
 {
   va_list ap;
   int priority;
